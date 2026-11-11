@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Batch Management Portal | Vintisk Pharmaceuticals Pvt. Ltd.</title>
+  <meta name="robots" content="noindex, nofollow">
+  
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/batch-verification.css">
+  <link rel="icon" type="image/jpeg" href="assets/images/vintisk-logo-official.jpeg">
+</head>
+<body class="admin-body">
+
+  <!-- Admin Header Bar -->
+  <header class="admin-header">
+    <div class="container admin-header-inner">
+      <div class="admin-brand">
+        <a href="index.html" class="nav-brand" style="color: #fff;">
+          <div class="nav-brand-logo-frame" style="height: 42px; width: 42px;">
+            <img src="assets/images/vintisk-logo-official.jpeg" alt="Vintisk Logo" class="nav-brand-img">
+          </div>
+          <div class="nav-brand-text">
+            <span class="nav-brand-name" style="color: #fff; font-size: 1rem;">VINTISK</span>
+            <span class="nav-brand-sub" style="font-size: 0.65rem;">Batch Management</span>
+          </div>
+        </a>
+        <span class="admin-brand-tag">Admin Console</span>
+      </div>
+
+      <div class="admin-nav-actions" id="adminTopNav" style="display: none;">
+        <span style="font-size: 0.85rem; color: var(--slate-300);">
+          Logged in: <strong id="adminUsernameDisplay" style="color: #fff;">admin</strong>
+        </span>
+        <button type="button" class="btn btn-outline-white btn-sm" onclick="openChangePasswordModal()" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">
+          Password
+        </button>
+        <a href="batch-verification.html" target="_blank" class="btn btn-outline-white btn-sm" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">
+          Public Verification &nearr;
+        </a>
+        <button type="button" class="btn btn-teal btn-sm" onclick="handleLogout()" style="padding: 0.4rem 0.9rem; font-size: 0.8rem;">
+          Sign Out
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- VIEW 1: AUTHENTICATION / LOGIN -->
+  <main id="loginView" class="admin-login-view">
+    <div class="admin-login-card">
+      <div class="admin-login-header">
+        <img src="assets/images/vintisk-logo-official.jpeg" alt="Official Vintisk Logo" class="admin-login-logo">
+        <h1 style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: var(--navy-900);">
+          Admin Portal Sign In
+        </h1>
+        <p style="color: var(--slate-500); font-size: 0.875rem; margin-top: 0.25rem;">
+          Authorized batch management access only
+        </p>
+      </div>
+
+      <div id="loginAlert" style="display: none; background: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; padding: 0.75rem 1rem; border-radius: var(--radius-md); font-size: 0.875rem; margin-bottom: 1.25rem; font-weight: 600;"></div>
+
+      <form id="loginForm" onsubmit="handleLogin(event)" style="display: flex; flex-direction: column; gap: 1.25rem;">
+        <div class="form-group">
+          <label for="usernameInput" class="form-label">Username</label>
+          <input 
+            type="text" 
+            id="usernameInput" 
+            class="form-input" 
+            placeholder="admin" 
+            required 
+            autocomplete="username"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="passwordInput" class="form-label">Password</label>
+          <input 
+            type="password" 
+            id="passwordInput" 
+            class="form-input" 
+            placeholder="••••••••••••" 
+            required 
+            autocomplete="current-password"
+          >
+        </div>
+
+        <button type="submit" id="loginSubmitBtn" class="btn btn-teal" style="width: 100%; margin-top: 0.5rem; padding: 0.85rem;">
+          <span id="loginBtnText">Sign In to Console</span>
+        </button>
+      </form>
+
+      <div style="margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid var(--slate-200); text-align: center;">
+        <a href="index.html" style="font-size: 0.85rem; color: var(--slate-500); text-decoration: none;">
+          &larr; Return to Public Website
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- VIEW 2: BATCH MANAGEMENT DASHBOARD -->
+  <main id="dashboardView" class="admin-dashboard-view" style="display: none;">
+    <div class="container">
+      
+      <!-- Metrics Overview -->
+      <div class="admin-stats-grid">
+        <div class="admin-stat-card">
+          <span class="admin-stat-label">Total Batches Registered</span>
+          <span class="admin-stat-num" id="statTotal">0</span>
+        </div>
+        <div class="admin-stat-card">
+          <span class="admin-stat-label">Active Verified Batches</span>
+          <span class="admin-stat-num" id="statActive" style="color: #15803d;">0</span>
+        </div>
+        <div class="admin-stat-card">
+          <span class="admin-stat-label">Inactive Batches</span>
+          <span class="admin-stat-num" id="statInactive" style="color: #64748b;">0</span>
+        </div>
+      </div>
+
+      <!-- Action & Filter Bar -->
+      <div class="admin-toolbar">
+        <div class="admin-toolbar-search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--slate-400);">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input 
+            type="text" 
+            id="searchInput" 
+            class="admin-search-input" 
+            placeholder="Search by Batch Number or Product Name..." 
+            oninput="handleSearchDebounce()"
+          >
+        </div>
+
+        <div class="admin-toolbar-actions">
+          <select id="statusFilter" class="form-select" style="padding: 0.65rem 1rem; width: auto; font-size: 0.875rem;" onchange="loadBatches()">
+            <option value="">All Statuses</option>
+            <option value="active">Active Only</option>
+            <option value="inactive">Inactive Only</option>
+          </select>
+
+          <button type="button" class="btn btn-teal btn-sm" onclick="openAddModal()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Add New Batch
+          </button>
+        </div>
+      </div>
+
+      <!-- Batches Table -->
+      <div class="admin-table-card">
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Batch Number</th>
+                <th>Product Name</th>
+                <th>Expiry Date</th>
+                <th>Official Document (PDF)</th>
+                <th>Status</th>
+                <th>Created Date</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="batchesTableBody">
+              <tr>
+                <td colspan="7" style="text-align: center; padding: 3rem; color: var(--slate-500);">
+                  Loading batch records...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- MODAL: ADD BATCH -->
+  <div id="addModal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Add New Product Batch</h3>
+        <button type="button" class="modal-close-btn" onclick="closeAddModal()" aria-label="Close modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <form id="addBatchForm" onsubmit="handleAddBatch(event)">
+        <div class="modal-body">
+          <div id="addBatchAlert" style="display: none; background: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; padding: 0.75rem 1rem; border-radius: var(--radius-md); font-size: 0.85rem; font-weight: 600;"></div>
+
+          <div class="form-group">
+            <label for="addBatchNumber" class="form-label">Batch Number <span class="required">*</span></label>
+            <input 
+              type="text" 
+              id="addBatchNumber" 
+              class="form-input" 
+              placeholder="e.g. VP-2026-B01" 
+              required
+              autocapitalize="characters"
+              style="text-transform: uppercase; font-family: monospace; font-weight: 700;"
+            >
+            <span style="font-size: 0.75rem; color: var(--slate-500);">Must be unique across all batches.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="addProductName" class="form-label">Product Name (Optional)</label>
+            <input 
+              type="text" 
+              id="addProductName" 
+              class="form-input" 
+              placeholder="e.g. PANTOVINT-DSR Capsules"
+            >
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label for="addExpiryDate" class="form-label">Expiry Date (Optional)</label>
+              <input 
+                type="date" 
+                id="addExpiryDate" 
+                class="form-input"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="addStatus" class="form-label">Status <span class="required">*</span></label>
+              <select id="addStatus" class="form-select">
+                <option value="active">Active (Verified publicly)</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Upload Official Batch PDF <span class="required">*</span></label>
+            <div 
+              class="file-upload-zone" 
+              id="addDropZone" 
+              onclick="document.getElementById('addPdfFileInput').click()"
+            >
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+              <div style="font-weight: 700; color: var(--navy-900); font-size: 0.95rem;">
+                Click to browse or drag &amp; drop PDF here
+              </div>
+              <div style="font-size: 0.8rem; color: var(--slate-500); margin-top: 2px;">
+                PDF files only (.pdf), maximum size 25MB
+              </div>
+            </div>
+
+            <input 
+              type="file" 
+              id="addPdfFileInput" 
+              accept=".pdf,application/pdf" 
+              style="display: none;" 
+              onchange="handleAddFileSelected(this)"
+            >
+
+            <div id="addSelectedFileInfo" class="file-upload-selected" style="display: none;">
+              <span id="addSelectedFileName" style="display: flex; align-items: center; gap: 0.4rem;"></span>
+              <button type="button" onclick="clearAddFile(event)" style="background: none; border: none; color: #ef4444; cursor: pointer; font-size: 0.8rem; font-weight: 700;">Remove</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline btn-sm" onclick="closeAddModal()">Cancel</button>
+          <button type="submit" id="addSubmitBtn" class="btn btn-teal btn-sm">
+            <span id="addSubmitText">Save Batch</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: EDIT BATCH -->
+  <div id="editModal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Edit Batch Record</h3>
+        <button type="button" class="modal-close-btn" onclick="closeEditModal()" aria-label="Close modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <form id="editBatchForm" onsubmit="handleEditBatch(event)">
+        <input type="hidden" id="editBatchId">
+
+        <div class="modal-body">
+          <div id="editBatchAlert" style="display: none; background: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; padding: 0.75rem 1rem; border-radius: var(--radius-md); font-size: 0.85rem; font-weight: 600;"></div>
+
+          <div class="form-group">
+            <label for="editBatchNumber" class="form-label">Batch Number <span class="required">*</span></label>
+            <input 
+              type="text" 
+              id="editBatchNumber" 
+              class="form-input" 
+              required
+              autocapitalize="characters"
+              style="text-transform: uppercase; font-family: monospace; font-weight: 700;"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="editProductName" class="form-label">Product Name (Optional)</label>
+            <input 
+              type="text" 
+              id="editProductName" 
+              class="form-input"
+            >
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label for="editExpiryDate" class="form-label">Expiry Date (Optional)</label>
+              <input 
+                type="date" 
+                id="editExpiryDate" 
+                class="form-input"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="editStatus" class="form-label">Status <span class="required">*</span></label>
+              <select id="editStatus" class="form-select">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Current PDF Document</label>
+            <div id="editCurrentPdfInfo" style="padding: 0.75rem 1rem; background: var(--slate-100); border-radius: var(--radius-md); font-size: 0.85rem; display: flex; align-items: center; justify-content: space-between;">
+              <span id="editCurrentPdfName" style="font-weight: 600; color: var(--navy-900);"></span>
+              <a id="editCurrentPdfLink" href="#" target="_blank" style="color: var(--teal-600); font-weight: 700; text-decoration: underline;">
+                View PDF &nearr;
+              </a>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Replace PDF Document (Optional)</label>
+            <input 
+              type="file" 
+              id="editPdfFileInput" 
+              accept=".pdf,application/pdf" 
+              class="form-input"
+              style="font-size: 0.85rem;"
+            >
+            <span style="font-size: 0.75rem; color: var(--slate-500);">Leave blank to keep current PDF file.</span>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline btn-sm" onclick="closeEditModal()">Cancel</button>
+          <button type="submit" id="editSubmitBtn" class="btn btn-teal btn-sm">
+            <span id="editSubmitText">Update Batch</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: DELETE CONFIRMATION -->
+  <div id="deleteModal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-card" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="color: #ef4444;">Delete Batch Record</h3>
+        <button type="button" class="modal-close-btn" onclick="closeDeleteModal()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <p style="color: var(--slate-700); line-height: 1.6;">
+          Are you sure you want to permanently delete batch record <strong id="deleteBatchName"></strong>?
+        </p>
+        <p style="font-size: 0.85rem; color: #b91c1c; background: #fee2e2; padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); margin-top: 0.5rem;">
+          This will remove the batch registration and delete its associated PDF file from persistent storage.
+        </p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline btn-sm" onclick="closeDeleteModal()">Cancel</button>
+        <button type="button" id="confirmDeleteBtn" class="btn btn-sm" style="background-color: #ef4444; color: #fff; border-color: #ef4444;" onclick="executeDeleteBatch()">
+          Confirm Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CHANGE PASSWORD -->
+  <div id="passwordModal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-card" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Change Admin Password</h3>
+        <button type="button" class="modal-close-btn" onclick="closeChangePasswordModal()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <form id="changePasswordForm" onsubmit="handleChangePassword(event)">
+        <div class="modal-body">
+          <div id="passwordAlert" style="display: none; background: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; padding: 0.75rem 1rem; border-radius: var(--radius-md); font-size: 0.85rem; font-weight: 600;"></div>
+
+          <div class="form-group">
+            <label for="currentPasswordInput" class="form-label">Current Password</label>
+            <input type="password" id="currentPasswordInput" class="form-input" required>
+          </div>
+
+          <div class="form-group">
+            <label for="newPasswordInput" class="form-label">New Password</label>
+            <input type="password" id="newPasswordInput" class="form-input" minlength="8" required>
+            <span style="font-size: 0.75rem; color: var(--slate-500);">Minimum 8 characters.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="confirmPasswordInput" class="form-label">Confirm New Password</label>
+            <input type="password" id="confirmPasswordInput" class="form-input" minlength="8" required>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline btn-sm" onclick="closeChangePasswordModal()">Cancel</button>
+          <button type="submit" id="savePasswordBtn" class="btn btn-teal btn-sm">
+            Update Password
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Admin Application Script -->
+  <script>
+    let currentAdmin = null;
+    let cachedBatches = [];
+    let deleteTargetId = null;
+    let searchDebounceTimer = null;
+
+    // Check Auth State on Initial Load
+    window.addEventListener('DOMContentLoaded', async () => {
+      setupDragDrop();
+      await checkAuthStatus();
+    });
+
+    async function checkAuthStatus() {
+      try {
+        const res = await fetch('/api/admin/me');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.authenticated) {
+            currentAdmin = data.user;
+            showDashboard();
+            return;
+          }
+        }
+        showLogin();
+      } catch (err) {
+        showLogin();
+      }
+    }
+
+    function showLogin() {
+      currentAdmin = null;
+      document.getElementById('loginView').style.display = 'flex';
+      document.getElementById('dashboardView').style.display = 'none';
+      document.getElementById('adminTopNav').style.display = 'none';
+    }
+
+    function showDashboard() {
+      document.getElementById('loginView').style.display = 'none';
+      document.getElementById('dashboardView').style.display = 'block';
+      document.getElementById('adminTopNav').style.display = 'flex';
+      document.getElementById('adminUsernameDisplay').textContent = currentAdmin ? currentAdmin.username : 'admin';
+      loadBatches();
+    }
+
+    // Login Handler
+    async function handleLogin(e) {
+      e.preventDefault();
+      const username = document.getElementById('usernameInput').value.trim();
+      const password = document.getElementById('passwordInput').value;
+      const alertBox = document.getElementById('loginAlert');
+      const submitBtn = document.getElementById('loginSubmitBtn');
+      const btnText = document.getElementById('loginBtnText');
+
+      alertBox.style.display = 'none';
+      submitBtn.disabled = true;
+      btnText.textContent = 'Verifying credentials...';
+
+      try {
+        const res = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await res.json();
+        submitBtn.disabled = false;
+        btnText.textContent = 'Sign In to Console';
+
+        if (res.ok && data.success) {
+          currentAdmin = data.user;
+          showToast('Welcome, ' + data.user.username, 'success');
+          showDashboard();
+        } else {
+          alertBox.textContent = data.message || 'Invalid username or password.';
+          alertBox.style.display = 'block';
+        }
+      } catch (err) {
+        submitBtn.disabled = false;
+        btnText.textContent = 'Sign In to Console';
+        alertBox.textContent = 'Network or server error. Please try again.';
+        alertBox.style.display = 'block';
+      }
+    }
+
+    // Logout Handler
+    async function handleLogout() {
+      try {
+        await fetch('/api/admin/logout', { method: 'POST' });
+      } catch (e) {}
+      showToast('You have been signed out.');
+      showLogin();
+    }
+
+    // Load Batches from Server
+    async function loadBatches() {
+      const search = document.getElementById('searchInput').value.trim();
+      const status = document.getElementById('statusFilter').value;
+
+      const params = new URLSearchParams();
+      if (search) params.set('search', search);
+      if (status) params.set('status', status);
+
+      try {
+        const res = await fetch('/api/admin/batches?' + params.toString());
+        if (res.status === 401) {
+          showLogin();
+          return;
+        }
+
+        const data = await res.json();
+        if (data.success) {
+          cachedBatches = data.batches;
+          updateStats(data.stats);
+          renderBatchesTable(cachedBatches);
+        }
+      } catch (err) {
+        console.error('Failed to load batches:', err);
+      }
+    }
+
+    function updateStats(stats) {
+      if (!stats) return;
+      document.getElementById('statTotal').textContent = stats.total || 0;
+      document.getElementById('statActive').textContent = stats.active || 0;
+      document.getElementById('statInactive').textContent = stats.inactive || 0;
+    }
+
+    function renderBatchesTable(batches) {
+      const tbody = document.getElementById('batchesTableBody');
+      if (!batches || batches.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" style="text-align: center; padding: 3rem; color: var(--slate-500);">
+              No batches found matching your search.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = batches.map(b => {
+        const isAct = b.status === 'active';
+        const statusBadge = isAct
+          ? `<span class="status-pill active"><svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="12"/></svg> Active</span>`
+          : `<span class="status-pill inactive"><svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="12"/></svg> Inactive</span>`;
+
+        const dateStr = b.created_at ? new Date(b.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '—';
+        const expiryStr = b.expiry_date || '—';
+        const docUrl = b.pdf_url;
+
+        return `
+          <tr>
+            <td>
+              <span class="batch-code-badge">${escapeHtml(b.batch_number)}</span>
+            </td>
+            <td>
+              <strong style="color: var(--navy-900);">${b.product_name ? escapeHtml(b.product_name) : '—'}</strong>
+            </td>
+            <td>
+              <span style="font-size: 0.85rem; font-weight: 500;">${escapeHtml(expiryStr)}</span>
+            </td>
+            <td>
+              <a href="${docUrl}" target="_blank" rel="noopener noreferrer" style="color: var(--teal-600); font-weight: 700; display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.85rem;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                ${escapeHtml(b.original_filename || 'View PDF')} &nearr;
+              </a>
+            </td>
+            <td>
+              ${statusBadge}
+            </td>
+            <td style="color: var(--slate-500); font-size: 0.85rem;">
+              ${dateStr}
+            </td>
+            <td>
+              <div class="table-actions" style="justify-content: flex-end;">
+                <button type="button" class="action-btn" title="Toggle Active / Inactive" onclick="toggleBatchStatus(${b.id}, '${b.status}')">
+                  ${isAct ? 'Deactivate' : 'Activate'}
+                </button>
+                <button type="button" class="action-btn" title="Edit Batch" onclick="openEditModal(${b.id})">
+                  Edit
+                </button>
+                <button type="button" class="action-btn delete-btn" title="Delete Batch" onclick="openDeleteModal(${b.id}, '${escapeHtml(b.batch_number)}')">
+                  Delete
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function handleSearchDebounce() {
+      clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = setTimeout(loadBatches, 250);
+    }
+
+    // Toggle Status
+    async function toggleBatchStatus(id, currentStatus) {
+      const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+      try {
+        const res = await fetch(`/api/admin/batches/${id}/status`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: newStatus })
+        });
+
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showToast(`Batch marked as ${newStatus}`, 'success');
+          loadBatches();
+        } else {
+          showToast(data.message || 'Failed to update status', 'error');
+        }
+      } catch (err) {
+        showToast('Network error while updating status', 'error');
+      }
+    }
+
+    // ADD BATCH MODAL & LOGIC
+    function openAddModal() {
+      document.getElementById('addBatchAlert').style.display = 'none';
+      document.getElementById('addBatchForm').reset();
+      clearAddFile();
+      document.getElementById('addModal').classList.add('open');
+      document.getElementById('addBatchNumber').focus();
+    }
+
+    function closeAddModal() {
+      document.getElementById('addModal').classList.remove('open');
+    }
+
+    function setupDragDrop() {
+      const dropZone = document.getElementById('addDropZone');
+      if (!dropZone) return;
+
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          dropZone.classList.add('dragover');
+        });
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          dropZone.classList.remove('dragover');
+        });
+      });
+
+      dropZone.addEventListener('drop', (e) => {
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          const file = files[0];
+          if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+            showToast('Only PDF files are allowed.', 'error');
+            return;
+          }
+          document.getElementById('addPdfFileInput').files = files;
+          handleAddFileSelected(document.getElementById('addPdfFileInput'));
+        }
+      });
+    }
+
+    function handleAddFileSelected(input) {
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        document.getElementById('addSelectedFileName').innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          ${escapeHtml(file.name)} (${(file.size / 1024 / 1024).toFixed(2)} MB)
+        `;
+        document.getElementById('addSelectedFileInfo').style.display = 'flex';
+      }
+    }
+
+    function clearAddFile(e) {
+      if (e) e.stopPropagation();
+      document.getElementById('addPdfFileInput').value = '';
+      document.getElementById('addSelectedFileInfo').style.display = 'none';
+    }
+
+    async function handleAddBatch(e) {
+      e.preventDefault();
+      const alertBox = document.getElementById('addBatchAlert');
+      const submitBtn = document.getElementById('addSubmitBtn');
+      const submitText = document.getElementById('addSubmitText');
+
+      const batchNumber = document.getElementById('addBatchNumber').value.trim();
+      const productName = document.getElementById('addProductName').value.trim();
+      const expiryDate = document.getElementById('addExpiryDate').value;
+      const status = document.getElementById('addStatus').value;
+      const fileInput = document.getElementById('addPdfFileInput');
+
+      if (!fileInput.files || fileInput.files.length === 0) {
+        alertBox.textContent = 'Please select a PDF document for this batch.';
+        alertBox.style.display = 'block';
+        return;
+      }
+
+      alertBox.style.display = 'none';
+      submitBtn.disabled = true;
+      submitText.textContent = 'Uploading & Saving...';
+
+      const formData = new FormData();
+      formData.append('batch_number', batchNumber);
+      if (productName) formData.append('product_name', productName);
+      if (expiryDate) formData.append('expiry_date', expiryDate);
+      formData.append('status', status);
+      formData.append('pdf_file', fileInput.files[0]);
+
+      try {
+        const res = await fetch('/api/admin/batches', {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await res.json();
+        submitBtn.disabled = false;
+        submitText.textContent = 'Save Batch';
+
+        if (res.ok && data.success) {
+          closeAddModal();
+          showToast(`Batch "${batchNumber}" registered successfully.`, 'success');
+          loadBatches();
+        } else {
+          alertBox.textContent = data.message || 'Failed to create batch.';
+          alertBox.style.display = 'block';
+        }
+      } catch (err) {
+        submitBtn.disabled = false;
+        submitText.textContent = 'Save Batch';
+        alertBox.textContent = 'Network or server error during upload.';
+        alertBox.style.display = 'block';
+      }
+    }
+
+    // EDIT BATCH MODAL & LOGIC
+    function openEditModal(id) {
+      const batch = cachedBatches.find(b => b.id === id);
+      if (!batch) return;
+
+      document.getElementById('editBatchAlert').style.display = 'none';
+      document.getElementById('editBatchId').value = batch.id;
+      document.getElementById('editBatchNumber').value = batch.batch_number;
+      document.getElementById('editProductName').value = batch.product_name || '';
+      document.getElementById('editExpiryDate').value = batch.expiry_date || '';
+      document.getElementById('editStatus').value = batch.status;
+
+      document.getElementById('editCurrentPdfName').textContent = batch.original_filename || 'batch_document.pdf';
+      document.getElementById('editCurrentPdfLink').href = batch.pdf_url;
+      document.getElementById('editPdfFileInput').value = '';
+
+      document.getElementById('editModal').classList.add('open');
+      document.getElementById('editBatchNumber').focus();
+    }
+
+    function closeEditModal() {
+      document.getElementById('editModal').classList.remove('open');
+    }
+
+    async function handleEditBatch(e) {
+      e.preventDefault();
+      const id = document.getElementById('editBatchId').value;
+      const alertBox = document.getElementById('editBatchAlert');
+      const submitBtn = document.getElementById('editSubmitBtn');
+      const submitText = document.getElementById('editSubmitText');
+
+      const batchNumber = document.getElementById('editBatchNumber').value.trim();
+      const productName = document.getElementById('editProductName').value.trim();
+      const expiryDate = document.getElementById('editExpiryDate').value;
+      const status = document.getElementById('editStatus').value;
+      const fileInput = document.getElementById('editPdfFileInput');
+
+      alertBox.style.display = 'none';
+      submitBtn.disabled = true;
+      submitText.textContent = 'Updating...';
+
+      const formData = new FormData();
+      formData.append('batch_number', batchNumber);
+      formData.append('product_name', productName);
+      formData.append('expiry_date', expiryDate);
+      formData.append('status', status);
+
+      if (fileInput.files && fileInput.files.length > 0) {
+        formData.append('pdf_file', fileInput.files[0]);
+      }
+
+      try {
+        const res = await fetch(`/api/admin/batches/${id}`, {
+          method: 'PUT',
+          body: formData
+        });
+
+        const data = await res.json();
+        submitBtn.disabled = false;
+        submitText.textContent = 'Update Batch';
+
+        if (res.ok && data.success) {
+          closeEditModal();
+          showToast(`Batch "${batchNumber}" updated successfully.`, 'success');
+          loadBatches();
+        } else {
+          alertBox.textContent = data.message || 'Failed to update batch.';
+          alertBox.style.display = 'block';
+        }
+      } catch (err) {
+        submitBtn.disabled = false;
+        submitText.textContent = 'Update Batch';
+        alertBox.textContent = 'Network or server error during update.';
+        alertBox.style.display = 'block';
+      }
+    }
+
+    // DELETE BATCH MODAL & LOGIC
+    function openDeleteModal(id, batchNumber) {
+      deleteTargetId = id;
+      document.getElementById('deleteBatchName').textContent = `"${batchNumber}"`;
+      document.getElementById('deleteModal').classList.add('open');
+    }
+
+    function closeDeleteModal() {
+      deleteTargetId = null;
+      document.getElementById('deleteModal').classList.remove('open');
+    }
+
+    async function executeDeleteBatch() {
+      if (!deleteTargetId) return;
+      const btn = document.getElementById('confirmDeleteBtn');
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(`/api/admin/batches/${deleteTargetId}`, {
+          method: 'DELETE'
+        });
+
+        const data = await res.json();
+        btn.disabled = false;
+        closeDeleteModal();
+
+        if (res.ok && data.success) {
+          showToast('Batch deleted successfully.', 'success');
+          loadBatches();
+        } else {
+          showToast(data.message || 'Failed to delete batch.', 'error');
+        }
+      } catch (err) {
+        btn.disabled = false;
+        closeDeleteModal();
+        showToast('Network error while deleting batch.', 'error');
+      }
+    }
+
+    // CHANGE PASSWORD MODAL & LOGIC
+    function openChangePasswordModal() {
+      document.getElementById('passwordAlert').style.display = 'none';
+      document.getElementById('changePasswordForm').reset();
+      document.getElementById('passwordModal').classList.add('open');
+    }
+
+    function closeChangePasswordModal() {
+      document.getElementById('passwordModal').classList.remove('open');
+    }
+
+    async function handleChangePassword(e) {
+      e.preventDefault();
+      const currentPassword = document.getElementById('currentPasswordInput').value;
+      const newPassword = document.getElementById('newPasswordInput').value;
+      const confirmPassword = document.getElementById('confirmPasswordInput').value;
+      const alertBox = document.getElementById('passwordAlert');
+      const submitBtn = document.getElementById('savePasswordBtn');
+
+      if (newPassword !== confirmPassword) {
+        alertBox.textContent = 'New password and confirm password do not match.';
+        alertBox.style.display = 'block';
+        return;
+      }
+
+      alertBox.style.display = 'none';
+      submitBtn.disabled = true;
+
+      try {
+        const res = await fetch('/api/admin/change-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            current_password: currentPassword,
+            new_password: newPassword
+          })
+        });
+
+        const data = await res.json();
+        submitBtn.disabled = false;
+
+        if (res.ok && data.success) {
+          closeChangePasswordModal();
+          showToast('Admin password updated successfully.', 'success');
+        } else {
+          alertBox.textContent = data.message || 'Failed to update password.';
+          alertBox.style.display = 'block';
+        }
+      } catch (err) {
+        submitBtn.disabled = false;
+        alertBox.textContent = 'Network error while updating password.';
+        alertBox.style.display = 'block';
+      }
+    }
+
+    // TOAST HELPER
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type === 'success' ? 'toast-success' : type === 'error' ? 'toast-error' : ''}`;
+      toast.innerHTML = `
+        <div style="font-weight: 600;">${escapeHtml(message)}</div>
+      `;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 350);
+      }, 4000);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+</body>
+</html>

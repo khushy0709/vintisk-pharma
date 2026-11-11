@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Batch Verification | Vintisk Pharmaceuticals Pvt. Ltd.</title>
+  <meta name="description" content="Verify your Vintisk Pharma product packaging batch number to view the official associated batch document. Direct, secure verification for customers and healthcare partners.">
+  
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/batch-verification.css">
+  <link rel="icon" type="image/jpeg" href="assets/images/vintisk-logo-official.jpeg">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+
+  <!-- Top Utility Bar -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="top-bar-tagline">
+        <strong>VINTISK PHARMACEUTICALS PVT. LTD.</strong> &bull; “Dedication Towards Saving Lives!”
+      </div>
+      <div class="top-bar-meta">
+        <span class="top-bar-item">Official Product Verification</span>
+        <span class="top-bar-item">Est. 2021</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sticky Navbar -->
+  <header class="site-header" id="mainHeader">
+    <div class="container navbar">
+      <!-- Official Untouched Vintisk Logo -->
+      <a href="index.html" class="nav-brand" title="Vintisk Pharmaceuticals Home">
+        <div class="nav-brand-logo-frame">
+          <img src="assets/images/vintisk-logo-official.jpeg" alt="Official Vintisk Pharmaceuticals Pvt. Ltd. Logo" class="nav-brand-img">
+        </div>
+        <div class="nav-brand-text">
+          <span class="nav-brand-name">VINTISK</span>
+          <span class="nav-brand-sub">Pharmaceuticals</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Menu -->
+      <nav aria-label="Main Navigation">
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="products.html" class="nav-link">Products</a></li>
+          <li><a href="services.html" class="nav-link">Services</a></li>
+          <li><a href="quality.html" class="nav-link">Quality</a></li>
+          <li><a href="market-presence.html" class="nav-link">Market Presence</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Primary CTA Action & Verification Button in Desktop Navbar -->
+      <div class="nav-actions">
+        <a href="/batch-verification" class="btn btn-outline btn-sm nav-verify-btn active" id="navVerifyBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+          Batch Verification
+        </a>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <div class="hamburger-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-modal="true">
+    <ul class="mobile-nav-list">
+      <li><a href="index.html" class="mobile-nav-link">Home</a></li>
+      <li><a href="about.html" class="mobile-nav-link">About</a></li>
+      <li><a href="products.html" class="mobile-nav-link">Products</a></li>
+      <li><a href="services.html" class="mobile-nav-link">Services</a></li>
+      <li><a href="quality.html" class="mobile-nav-link">Quality</a></li>
+      <li><a href="market-presence.html" class="mobile-nav-link">Market Presence</a></li>
+      <li><a href="contact.html" class="mobile-nav-link">Contact</a></li>
+      <li><a href="/batch-verification" class="mobile-nav-link active">Batch Verification</a></li>
+    </ul>
+    <div style="margin-top: auto; padding-top: 1.5rem; border-top: 1px solid var(--slate-200);">
+      <a href="contact.html" class="btn btn-teal" style="width: 100%;">Partner With Us</a>
+    </div>
+  </div>
+
+  <main id="mainContent">
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+      <div class="container page-hero-inner">
+        <div class="eyebrow eyebrow-light">PRODUCT VERIFICATION SYSTEM</div>
+        <h1 class="page-hero-title">Verify Your Product</h1>
+        <p class="page-hero-desc">
+          Enter the batch number printed on your Vintisk Pharma product packaging to verify its associated product document.
+        </p>
+      </div>
+    </section>
+
+    <!-- VERIFICATION INPUT SECTION -->
+    <section class="verification-wrapper">
+      <div class="container">
+        
+        <!-- Input Form Card -->
+        <div class="verification-card">
+          <form id="batchVerificationForm" class="verification-form" onsubmit="handleVerification(event)">
+            <div>
+              <label for="batchNumberInput" class="form-label" style="font-size: 0.95rem; margin-bottom: 0.5rem; display: block;">
+                Batch Number <span class="required">*</span>
+              </label>
+              
+              <div class="verification-input-wrap">
+                <input 
+                  type="text" 
+                  id="batchNumberInput" 
+                  class="batch-input-field" 
+                  placeholder="e.g. VP-2026-B01" 
+                  autocomplete="off"
+                  autocapitalize="characters"
+                  spellcheck="false"
+                  required
+                >
+                <button type="submit" id="verifyBtn" class="batch-verify-btn">
+                  <span id="btnIcon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                  </span>
+                  <span id="btnText">Verify Batch</span>
+                </button>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+              <div class="verification-hint">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00a3c4" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                Find the Batch No. (B.No.) printed near the Mfg/Exp date on your product pack.
+              </div>
+              <div id="inputErrorMsg" style="color: #ef4444; font-size: 0.85rem; font-weight: 600; display: none;"></div>
+            </div>
+          </form>
+        </div>
+
+        <!-- RESULTS DISPLAY CONTAINER -->
+        <div id="resultsContainer" class="verification-result" style="display: none;"></div>
+
+      </div>
+    </section>
+
+    <!-- PACKAGING GUIDANCE -->
+    <section class="guidance-section">
+      <div class="container">
+        <div style="text-align: center; max-width: 680px; margin: 0 auto;">
+          <div class="eyebrow" style="color: var(--teal-600);">PACKAGING ASSISTANCE</div>
+          <h2 style="font-family: var(--font-heading); font-size: 2rem; color: var(--navy-900); font-weight: 800; margin-top: 0.5rem;">
+            Where to Find Your Batch Number
+          </h2>
+          <p style="color: var(--slate-600); margin-top: 0.5rem;">
+            Every genuine Vintisk Pharma marketed product features an official batch identification code for complete traceability.
+          </p>
+        </div>
+
+        <div class="guidance-grid">
+          <div class="guidance-card">
+            <div class="guidance-num">1</div>
+            <h3 class="guidance-title">Outer Packaging Flap</h3>
+            <p class="guidance-text">
+              Inspect the side or top flap of the product carton box. Look for embossed or inkjet printed lines starting with <strong>B.No.</strong> or <strong>Batch</strong>.
+            </p>
+          </div>
+
+          <div class="guidance-card">
+            <div class="guidance-num">2</div>
+            <h3 class="guidance-title">Blister / Foil Strip</h3>
+            <p class="guidance-text">
+              For tablets and capsules, the batch number is crimped or printed along the sealed edge or reverse side of the aluminium/PVC blister strip.
+            </p>
+          </div>
+
+          <div class="guidance-card">
+            <div class="guidance-num">3</div>
+            <h3 class="guidance-title">Bottle / Syrup Label</h3>
+            <p class="guidance-text">
+              For liquid oral suspensions and syrups, the batch code is printed directly on the bottle label alongside the Maximum Retail Price (MRP) and Expiry Date.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MANDATORY COMPANY CONTEXT NOTICE -->
+    <div class="marketing-disclaimer-strip">
+      <div class="container" style="text-align: center; max-width: 900px;">
+        <strong>Company Notice:</strong> Vintisk Pharmaceuticals Pvt. Ltd. is a pharmaceutical marketing company. Formulations are manufactured through certified pharmaceutical manufacturing facilities compliant with WHO-GMP and ISO standards. The verified document represents official quality and batch release documentation.
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo-wrap">
+            <div class="footer-logo-frame">
+              <img src="assets/images/vintisk-logo-official.jpeg" alt="Official Vintisk Logo" class="footer-logo-img">
+            </div>
+            <div>
+              <div class="footer-brand-title">VINTISK</div>
+              <div class="footer-brand-sub">Pharmaceuticals Pvt. Ltd.</div>
+            </div>
+          </div>
+          <p class="footer-bio">
+            A pharmaceutical marketing enterprise marketing high-quality, accessible branded generics across India through established WHO-GMP compliant manufacturing partners.
+          </p>
+        </div>
+
+        <!-- Quick Navigation -->
+        <div>
+          <h4 class="footer-col-title">Navigation</h4>
+          <ul class="footer-nav-list">
+            <li><a href="index.html" class="footer-nav-link">Home</a></li>
+            <li><a href="about.html" class="footer-nav-link">About</a></li>
+            <li><a href="products.html" class="footer-nav-link">Products</a></li>
+            <li><a href="services.html" class="footer-nav-link">Services</a></li>
+            <li><a href="quality.html" class="footer-nav-link">Quality</a></li>
+            <li><a href="market-presence.html" class="footer-nav-link">Market Presence</a></li>
+            <li><a href="contact.html" class="footer-nav-link">Contact</a></li>
+            <li><a href="/batch-verification" class="footer-nav-link" style="color: var(--teal-400); font-weight: 600;">Batch Verification</a></li>
+          </ul>
+        </div>
+
+        <!-- Therapeutic Portfolios -->
+        <div>
+          <h4 class="footer-col-title">Therapeutics</h4>
+          <ul class="footer-nav-list">
+            <li><a href="products.html" class="footer-nav-link">Paediatrics & Drops</a></li>
+            <li><a href="products.html" class="footer-nav-link">Gynaecology Care</a></li>
+            <li><a href="products.html" class="footer-nav-link">Gastroenterology</a></li>
+            <li><a href="products.html" class="footer-nav-link">Orthopaedics & Pain</a></li>
+            <li><a href="products.html" class="footer-nav-link">Cardiology & Diabetics</a></li>
+          </ul>
+        </div>
+
+        <!-- Verified Contact Details -->
+        <div>
+          <h4 class="footer-col-title">Offices & Contact</h4>
+          <div style="display: flex; flex-direction: column; gap: 1rem; font-size: 0.84rem;">
+            <div>
+              <div style="color: var(--teal-400); font-weight: 700; font-size: 0.72rem; text-transform: uppercase;">Registered Office</div>
+              <div style="color: var(--slate-300); line-height: 1.4; margin-top: 2px;">
+                4, Bldg, Bhaindar E, Near Narmada Nagar, Thane, Maharashtra, India
+              </div>
+              <a href="mailto:vintiskpharma@gmail.com" style="color: var(--teal-400); font-weight: 600; display: inline-block; margin-top: 2px;">
+                vintiskpharma@gmail.com
+              </a>
+            </div>
+
+            <div>
+              <div style="color: var(--teal-400); font-weight: 700; font-size: 0.72rem; text-transform: uppercase;">Regional Office</div>
+              <div style="color: var(--slate-300); line-height: 1.4; margin-top: 2px;">
+                253-177B Old Phaphamau, Prayagraj, Uttar Pradesh, India
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 2px; margin-top: 2px;">
+                <a href="mailto:vintiskpharmaltd@gmail.com" style="color: var(--teal-400); font-weight: 600;">
+                  vintiskpharmaltd@gmail.com
+                </a>
+                <a href="tel:+919415458269" style="color: #ffffff; font-weight: 700;">
+                  Mobile: +91 9415458269
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; 2021–2026 Vintisk Pharmaceuticals Pvt. Ltd. All rights reserved.
+        </div>
+        <div class="footer-legal-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms & Conditions</a>
+          <a href="/admin" class="footer-admin-link">Staff Portal</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+
+  <!-- Batch Verification Client Script -->
+  <script>
+    const batchInput = document.getElementById('batchNumberInput');
+    const verifyBtn = document.getElementById('verifyBtn');
+    const btnText = document.getElementById('btnText');
+    const btnIcon = document.getElementById('btnIcon');
+    const resultsContainer = document.getElementById('resultsContainer');
+    const inputErrorMsg = document.getElementById('inputErrorMsg');
+
+    const API_BASE = (window.location.protocol === 'file:') ? 'http://localhost:3000' : '';
+
+    // Auto-uppercase batch input
+    batchInput.addEventListener('input', () => {
+      inputErrorMsg.style.display = 'none';
+      batchInput.style.borderColor = '';
+    });
+
+    // Check query params on load (e.g. ?batch=VP-2026-B01)
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const batchParam = urlParams.get('batch') || urlParams.get('b');
+      if (batchParam) {
+        batchInput.value = batchParam.trim();
+        performVerification(batchParam.trim());
+      }
+    });
+
+    async function handleVerification(e) {
+      if (e) e.preventDefault();
+      const rawBatch = batchInput.value.trim();
+
+      if (!rawBatch) {
+        showInputError('Please enter a batch number.');
+        batchInput.focus();
+        return;
+      }
+
+      performVerification(rawBatch);
+    }
+
+    function showInputError(msg) {
+      inputErrorMsg.textContent = msg;
+      inputErrorMsg.style.display = 'block';
+      batchInput.style.borderColor = '#ef4444';
+    }
+
+    function setLoading(isLoading) {
+      if (isLoading) {
+        verifyBtn.disabled = true;
+        btnText.textContent = 'Verifying...';
+        btnIcon.innerHTML = `
+          <svg class="spinner" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle>
+            <path d="M12 2a10 10 0 0 1 10 10"></path>
+          </svg>
+        `;
+      } else {
+        verifyBtn.disabled = false;
+        btnText.textContent = 'Verify Batch';
+        btnIcon.innerHTML = `
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        `;
+      }
+    }
+
+    async function performVerification(batchNumber) {
+      setLoading(true);
+      inputErrorMsg.style.display = 'none';
+      resultsContainer.style.display = 'none';
+
+      try {
+        const response = await fetch(`${API_BASE}/api/verify-batch`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ batch_number: batchNumber })
+        });
+
+        const data = await response.json();
+        setLoading(false);
+
+        if (response.ok && data.success) {
+          renderVerifiedState(data);
+        } else if (data.error === 'not_found') {
+          renderNotFoundState(data);
+        } else if (data.error === 'inactive') {
+          renderInactiveState(data);
+        } else if (data.error === 'empty_batch') {
+          showInputError(data.message || 'Please enter a batch number.');
+        } else {
+          renderErrorState(data);
+        }
+
+      } catch (err) {
+        setLoading(false);
+        console.error('Verification network error:', err);
+        const errorMsg = (window.location.protocol === 'file:')
+          ? 'Unable to connect to the backend server. Please make sure the Vintisk Pharma server is running on http://localhost:3000 (run "npm start" in the terminal).'
+          : 'Unable to reach the verification server. Please verify your connection and try again.';
+        renderErrorState({
+          heading: 'Connection Issue',
+          message: errorMsg
+        });
+      }
+    }
+
+    function renderVerifiedState(data) {
+      const batch = data.batch;
+      let docUrl = data.document_url;
+      if (docUrl && !docUrl.startsWith('http')) {
+        docUrl = API_BASE + docUrl;
+      }
+      const todayFormatted = new Date().toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
+      });
+
+      let expiryDisplay = batch.expiry_date || 'N/A';
+      let expiryBadge = '';
+      if (batch.is_expired) {
+        expiryBadge = `<span style="display:inline-block; font-size:0.75rem; color:#b45309; background:#fef3c7; border:1px solid #fde68a; padding:1px 6px; border-radius:4px; margin-left:6px;">Past Expiry Date</span>`;
+      }
+
+      resultsContainer.innerHTML = `
+        <!-- Verified Banner -->
+        <div class="verified-banner">
+          <div class="verified-banner-header">
+            <div class="verified-icon-badge">✓</div>
+            <div>
+              <h2 class="verified-headline">✓ Batch Verified</h2>
+              <p class="verified-subtext">This batch number is registered in the Vintisk Pharma verification system.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Batch Information Grid -->
+        <div class="batch-details-grid">
+          <div class="batch-meta-item">
+            <span class="batch-meta-label">Batch Number</span>
+            <span class="batch-meta-value" style="font-family:monospace; color:var(--teal-600);">${escapeHtml(batch.batch_number)}</span>
+          </div>
+
+          <div class="batch-meta-item">
+            <span class="batch-meta-label">Product Name</span>
+            <span class="batch-meta-value">${batch.product_name ? escapeHtml(batch.product_name) : 'Branded Formulation'}</span>
+          </div>
+
+          <div class="batch-meta-item">
+            <span class="batch-meta-label">Expiry Date</span>
+            <span class="batch-meta-value">${escapeHtml(expiryDisplay)} ${expiryBadge}</span>
+          </div>
+
+          <div class="batch-meta-item">
+            <span class="batch-meta-label">Verification Status</span>
+            <span class="batch-meta-value badge-active">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Active &amp; Verified
+            </span>
+          </div>
+
+          <div class="batch-meta-item">
+            <span class="batch-meta-label">Verified On</span>
+            <span class="batch-meta-value" style="font-size: 0.95rem; font-weight: 600;">${todayFormatted}</span>
+          </div>
+        </div>
+
+        <!-- Responsive PDF Viewer -->
+        <div class="pdf-viewer-card">
+          <div class="pdf-viewer-toolbar">
+            <div class="pdf-viewer-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              <span>Batch Document: <strong>${escapeHtml(batch.batch_number)}</strong></span>
+            </div>
+            
+
+          </div>
+
+          <div class="pdf-frame-container" id="pdfContainer">
+            <div class="pdf-loading-state" style="padding: 3rem 1.5rem; text-align: center; color: var(--slate-600); background: #f8fafc;">
+              <p style="font-weight: 700; color: var(--navy-900); font-size: 1rem; margin-bottom: 4px;">Loading Batch Document...</p>
+              <p style="font-size: 0.85rem; color: var(--slate-500);">Rendering verified release certificate</p>
+            </div>
+          </div>
+
+        </div>
+      `;
+
+      resultsContainer.style.display = 'block';
+      resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      loadPdfDocument(docUrl);
+    }
+
+    function loadPdfDocument(docUrl) {
+      const container = document.getElementById('pdfContainer');
+      if (!container) return;
+
+      // Try PDF.js canvas rendering first (best quality)
+      if (typeof pdfjsLib !== 'undefined') {
+        try {
+          pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        } catch (e) {}
+
+        const loadingTask = pdfjsLib.getDocument({
+          url: docUrl,
+          withCredentials: false
+        });
+
+        loadingTask.promise.then(function(pdf) {
+          container.innerHTML = '';
+          container.className = 'pdf-frame-container pdf-canvas-wrapper';
+          container.style.display = 'flex';
+          container.style.flexDirection = 'column';
+          container.style.alignItems = 'center';
+          container.style.gap = '1.25rem';
+          container.style.padding = '1.5rem 1rem';
+          container.style.background = '#0f172a';
+          container.style.overflowY = 'auto';
+          container.style.maxHeight = '850px';
+
+          for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+            pdf.getPage(pageNum).then(function(page) {
+              const canvas = document.createElement('canvas');
+              canvas.className = 'pdf-page-canvas';
+              canvas.style.maxWidth = '100%';
+              canvas.style.height = 'auto';
+              canvas.style.boxShadow = '0 6px 18px rgba(0,0,0,0.35)';
+              canvas.style.borderRadius = '4px';
+              canvas.style.background = '#ffffff';
+
+              const containerWidth = Math.min(container.clientWidth > 40 ? container.clientWidth - 40 : 800, 900);
+              const unscaledViewport = page.getViewport({ scale: 1.0 });
+              const scale = Math.max(containerWidth / unscaledViewport.width, 1.0);
+              const viewport = page.getViewport({ scale: scale });
+
+              const context = canvas.getContext('2d');
+              canvas.height = viewport.height;
+              canvas.width = viewport.width;
+
+              container.appendChild(canvas);
+
+              page.render({
+                canvasContext: context,
+                viewport: viewport
+              });
+            });
+          }
+        }).catch(function(err) {
+          console.warn('PDF.js canvas render failed, trying embed:', err);
+          renderEmbedViewer(container, docUrl);
+        });
+      } else {
+        // PDF.js CDN not loaded — use native browser embed
+        renderEmbedViewer(container, docUrl);
+      }
+    }
+
+    function renderEmbedViewer(container, docUrl) {
+      // Use <embed> tag — works natively in all modern browsers without CDN
+      container.innerHTML = `
+        <embed
+          src="${docUrl}"
+          type="application/pdf"
+          style="width: 100%; height: 680px; border: none; display: block; border-radius: 0 0 8px 8px;"
+          title="Official Batch Product Document"
+        >
+      `;
+      // If embed fails (mobile browsers without PDF plugin), show direct open link
+      setTimeout(function() {
+        const embed = container.querySelector('embed');
+        if (embed && (embed.clientHeight === 0 || container.scrollHeight < 50)) {
+          renderDirectLinkViewer(container, docUrl);
+        }
+      }, 2500);
+    }
+
+    function renderDirectLinkViewer(container, docUrl) {
+      container.innerHTML = `
+        <div style="padding: 2.5rem 1.5rem; text-align: center; background: #f8fafc; border-radius: 0 0 8px 8px;">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#00a3c4" stroke-width="1.5" style="margin-bottom: 1rem;">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+          <p style="font-weight: 700; color: #0f172a; font-size: 1.05rem; margin-bottom: 0.5rem;">Batch Document Ready</p>
+          <p style="color: #64748b; font-size: 0.875rem; margin-bottom: 1.5rem; line-height: 1.6;">
+            Tap the button below to open the official batch document in your browser.
+          </p>
+          <a href="${docUrl}" target="_blank" rel="noopener noreferrer"
+             style="display: inline-flex; align-items: center; gap: 0.5rem; background: #00a3c4; color: #fff; font-weight: 700; font-size: 0.95rem; padding: 0.75rem 1.75rem; border-radius: 8px; text-decoration: none;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+            Open Batch Document
+          </a>
+        </div>
+      `;
+    }
+
+    function renderNotFoundState(data) {
+      resultsContainer.innerHTML = `
+        <div class="not-found-card">
+          <div class="not-found-icon-wrap">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+          </div>
+          <h2 class="not-found-heading">${escapeHtml(data.heading || 'Batch Not Found')}</h2>
+          <p class="not-found-desc">
+            ${escapeHtml(data.message || 'We could not find a document associated with this batch number. Please check the batch number and try again. If the issue persists, please contact Vintisk Pharma.')}
+          </p>
+
+          <div class="not-found-actions">
+            <button type="button" class="btn btn-outline btn-sm" onclick="focusSearch()">
+              Try Another Batch
+            </button>
+            <a href="contact.html" class="btn btn-teal btn-sm">
+              Contact Vintisk Pharma Support
+            </a>
+          </div>
+        </div>
+      `;
+      resultsContainer.style.display = 'block';
+      resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function renderInactiveState(data) {
+      resultsContainer.innerHTML = `
+        <div class="notice-card notice-warning">
+          <div style="display: flex; gap: 1rem; align-items: flex-start;">
+            <div style="color: #b45309; flex-shrink: 0; margin-top: 2px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <div>
+              <h3 style="font-family: var(--font-heading); color: var(--navy-900); font-weight: 800; font-size: 1.25rem;">
+                ${escapeHtml(data.heading || 'Batch Record Inactive')}
+              </h3>
+              <p style="color: var(--slate-700); margin-top: 0.5rem; line-height: 1.6;">
+                ${escapeHtml(data.message || 'This batch record is currently marked as inactive in our verification system. Please contact Vintisk Pharma for verification support.')}
+              </p>
+              <div style="margin-top: 1.25rem;">
+                <a href="contact.html" class="btn btn-teal btn-sm">Contact Support</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      resultsContainer.style.display = 'block';
+      resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function renderErrorState(data) {
+      resultsContainer.innerHTML = `
+        <div class="notice-card" style="border-left-color: #ef4444;">
+          <h3 style="font-family: var(--font-heading); color: #991b1b; font-weight: 800; font-size: 1.2rem;">
+            ${escapeHtml(data.heading || 'Notice')}
+          </h3>
+          <p style="color: var(--slate-700); margin-top: 0.5rem; line-height: 1.6;">
+            ${escapeHtml(data.message || 'An error occurred during verification. Please try again.')}
+          </p>
+        </div>
+      `;
+      resultsContainer.style.display = 'block';
+      resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function focusSearch() {
+      batchInput.focus();
+      batchInput.select();
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+</body>
+</html>

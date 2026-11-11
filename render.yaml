@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: vintisk-pharma
+    env: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: PERSISTENT_DATA_DIR
+        value: /var/data
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD
+        generateValue: true
+      - key: UPDATE_ADMIN_PASSWORD
+        value: "false"
+    disk:
+      name: vintisk-data
+      mountPath: /var/data
+      sizeGB: 1

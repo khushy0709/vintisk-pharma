@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pharmaceutical Product Portfolio | Vintisk Pharmaceuticals Pvt. Ltd.</title>
+  <meta name="description" content="Explore Vintisk Pharmaceuticals' branded generic portfolio across Paediatrics, Gynaecology, Gastroenterology, Orthopaedics, Urology, Cardiology, Diabetics, and Neurology.">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" type="image/jpeg" href="assets/images/vintisk-logo-official.jpeg">
+</head>
+<body>
+
+  <!-- Top Utility Bar -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="top-bar-tagline">
+        <strong>VINTISK PHARMACEUTICALS PVT. LTD.</strong> &bull; “Dedication Towards Saving Lives!”
+      </div>
+      <div class="top-bar-meta">
+        <span class="top-bar-item">Branded Generic Portfolio</span>
+        <span class="top-bar-item">Domestic Market Availability</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sticky Navbar -->
+  <header class="site-header" id="mainHeader">
+    <div class="container navbar">
+      <a href="index.html" class="nav-brand" title="Vintisk Pharmaceuticals Home">
+        <div class="nav-brand-logo-frame">
+          <img src="assets/images/vintisk-logo-official.jpeg" alt="Official Vintisk Pharmaceuticals Logo" class="nav-brand-img">
+        </div>
+        <div class="nav-brand-text">
+          <span class="nav-brand-name">VINTISK</span>
+          <span class="nav-brand-sub">Pharmaceuticals</span>
+        </div>
+      </a>
+
+      <nav aria-label="Main Navigation">
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="products.html" class="nav-link active">Products</a></li>
+          <li><a href="services.html" class="nav-link">Services</a></li>
+          <li><a href="quality.html" class="nav-link">Quality</a></li>
+          <li><a href="market-presence.html" class="nav-link">Market Presence</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="/batch-verification" class="btn btn-outline btn-sm nav-verify-btn" id="navVerifyBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+          Batch Verification
+        </a>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu">
+          <div class="hamburger-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" id="mobileDrawer" role="dialog">
+    <ul class="mobile-nav-list">
+      <li><a href="index.html" class="mobile-nav-link">Home</a></li>
+      <li><a href="about.html" class="mobile-nav-link">About</a></li>
+      <li><a href="products.html" class="mobile-nav-link active">Products</a></li>
+      <li><a href="services.html" class="mobile-nav-link">Services</a></li>
+      <li><a href="quality.html" class="mobile-nav-link">Quality</a></li>
+      <li><a href="market-presence.html" class="mobile-nav-link">Market Presence</a></li>
+      <li><a href="contact.html" class="mobile-nav-link">Contact</a></li>
+      <li><a href="/batch-verification" class="mobile-nav-link">Batch Verification</a></li>
+    </ul>
+  </div>
+
+  <main>
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+      <div class="container page-hero-inner">
+        <div class="eyebrow eyebrow-light">BRANDED GENERIC MEDICINES</div>
+        <h1 class="page-hero-title">Our Pharmaceutical Portfolio</h1>
+        <p class="page-hero-desc">
+          Explore Vintisk Pharma's growing portfolio of branded generic medicines across multiple therapeutic segments in the Indian domestic market.
+        </p>
+      </div>
+    </section>
+
+    <!-- PRODUCT CATALOGUE INTERFACE -->
+    <section class="section" style="padding-top: 3.5rem;">
+      <div class="container">
+        
+        <!-- Partner Manufacturing Clarification Notice -->
+        <div style="background: var(--slate-50); border-left: 4px solid var(--teal-500); padding: 1.25rem 1.75rem; border-radius: var(--radius-md); border-top: var(--border-light); border-right: var(--border-light); border-bottom: var(--border-light); margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <div style="font-weight: 700; color: var(--navy-900); font-size: 0.95rem; margin-bottom: 0.2rem;">
+              Quality & Manufacturing Notice
+            </div>
+            <div style="font-size: 0.85rem; color: var(--slate-600);">
+              Vintisk Pharmaceuticals markets its own branded generic formulations. Products are manufactured through trusted contract manufacturing partners operating WHO-GMP and ISO-certified manufacturing facilities.
+            </div>
+          </div>
+          <span class="badge-tag">WHO-GMP Partnered</span>
+        </div>
+
+        <!-- Filter & Search Toolbar -->
+        <div class="product-filter-bar">
+          <!-- Therapeutic Filter Pills -->
+          <div class="filter-categories">
+            <button class="filter-btn active" data-category="All Formulations">All Formulations</button>
+            <button class="filter-btn" data-category="Paediatrics">Paediatrics</button>
+            <button class="filter-btn" data-category="Gynaecology">Gynaecology</button>
+            <button class="filter-btn" data-category="Gastroenterology">Gastroenterology</button>
+            <button class="filter-btn" data-category="Orthopaedics">Orthopaedics</button>
+            <button class="filter-btn" data-category="Urology">Urology</button>
+            <button class="filter-btn" data-category="Cardiology">Cardiology</button>
+            <button class="filter-btn" data-category="Diabetics">Diabetics</button>
+            <button class="filter-btn" data-category="Neurology">Neurology</button>
+            <button class="filter-btn" data-category="Other Segments">Other Segments</button>
+          </div>
+
+          <!-- Live Search Input -->
+          <div class="search-box">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input 
+              type="text" 
+              class="search-input" 
+              id="productSearchInput" 
+              placeholder="Search by molecule or segment..." 
+              aria-label="Search pharmaceutical products"
+            >
+          </div>
+        </div>
+
+        <!-- Results Counter & Status -->
+        <div class="product-results-bar">
+          <span id="productResultsCount" style="font-weight: 600; color: var(--navy-900);">Loading formulations...</span>
+          <span>Dosage Forms: Tablets &bull; Capsules &bull; Syrups &bull; Injections &bull; Drops</span>
+        </div>
+
+        <!-- Dynamic Product Cards Grid -->
+        <div class="products-grid" id="productsContainer">
+          <!-- Populated by assets/js/products.js -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CUSTOM FORMULATION / ENQUIRY BANNER -->
+    <section class="section" style="padding-top: 1rem; padding-bottom: 5rem;">
+      <div class="container">
+        <div class="cta-banner">
+          <div class="cta-banner-content">
+            <div class="eyebrow eyebrow-light">DISTRIBUTION & PARTNERSHIP</div>
+            <h2 class="cta-banner-title">Interested in Distributing Vintisk Brands?</h2>
+            <p class="cta-banner-text">
+              We welcome licensed wholesale distributors, stockists, and hospital pharmacy procurement teams looking to partner with our growing branded generic network.
+            </p>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+              <a href="contact.html" class="btn btn-teal btn-lg">Submit Distribution Enquiry</a>
+              <a href="services.html" class="btn btn-outline-white btn-lg">Explore Capabilities</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- PRODUCT DETAIL MODAL (No Ecommerce, Technical Dossier Only) -->
+  <div class="modal-overlay" id="productDetailModal" role="dialog" aria-modal="true">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div>
+          <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal-600);">
+            Formulation Specification Sheet
+          </span>
+          <h3 style="font-size: 1.15rem; color: var(--navy-900); margin-top: 0.25rem;">Branded Generic Monograph</h3>
+        </div>
+        <button class="modal-close-btn" onclick="closeProductDetail()" aria-label="Close dialog">&times;</button>
+      </div>
+      <div class="modal-body" id="modalDynamicContent">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo-wrap">
+            <div class="footer-logo-frame">
+              <img src="assets/images/vintisk-logo-official.jpeg" alt="Vintisk Pharmaceuticals Logo" class="footer-logo-img">
+            </div>
+            <div>
+              <div class="footer-brand-name">VINTISK</div>
+              <div class="footer-brand-sub">Pharmaceuticals Pvt. Ltd.</div>
+            </div>
+          </div>
+          <p class="footer-tagline-main">“Dedication Towards Saving Lives!”</p>
+          <p class="footer-tagline-sub">Quality. Affordability. Innovation.</p>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Navigation</h4>
+          <ul class="footer-nav-list">
+            <li><a href="index.html" class="footer-nav-link">Home</a></li>
+            <li><a href="about.html" class="footer-nav-link">About</a></li>
+            <li><a href="products.html" class="footer-nav-link">Products</a></li>
+            <li><a href="services.html" class="footer-nav-link">Services</a></li>
+            <li><a href="quality.html" class="footer-nav-link">Quality</a></li>
+            <li><a href="market-presence.html" class="footer-nav-link">Market Presence</a></li>
+            <li><a href="contact.html" class="footer-nav-link">Contact</a></li>
+            <li><a href="/batch-verification" class="footer-nav-link">Batch Verification</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Dosage Forms</h4>
+          <ul class="footer-nav-list">
+            <li><a href="#" class="footer-nav-link">Tablets (Coated / Dispersible)</a></li>
+            <li><a href="#" class="footer-nav-link">Hard & Gastro-Resistant Capsules</a></li>
+            <li><a href="#" class="footer-nav-link">Oral Syrups & Suspensions</a></li>
+            <li><a href="#" class="footer-nav-link">Injectable Formulations</a></li>
+            <li><a href="#" class="footer-nav-link">Paediatric Drops</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Offices & Contact</h4>
+          <div style="display: flex; flex-direction: column; gap: 1rem; font-size: 0.84rem;">
+            <div>
+              <div style="color: var(--teal-400); font-weight: 700; font-size: 0.72rem; text-transform: uppercase;">Registered Office</div>
+              <div style="color: var(--slate-300); line-height: 1.4; margin-top: 2px;">
+                4, Bldg, Bhaindar E, Near Narmada Nagar, Thane, Maharashtra, India
+              </div>
+              <a href="mailto:vintiskpharma@gmail.com" style="color: var(--teal-400); font-weight: 600; display: inline-block; margin-top: 2px;">
+                vintiskpharma@gmail.com
+              </a>
+            </div>
+
+            <div>
+              <div style="color: var(--teal-400); font-weight: 700; font-size: 0.72rem; text-transform: uppercase;">Regional Office</div>
+              <div style="color: var(--slate-300); line-height: 1.4; margin-top: 2px;">
+                253-177B Old Phaphamau, Prayagraj, Uttar Pradesh, India
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 2px; margin-top: 2px;">
+                <a href="mailto:vintiskpharmaltd@gmail.com" style="color: var(--teal-400); font-weight: 600;">
+                  vintiskpharmaltd@gmail.com
+                </a>
+                <a href="tel:+919415458269" style="color: #ffffff; font-weight: 700;">
+                  Mobile: +91 9415458269
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2021–2026 Vintisk Pharmaceuticals Pvt. Ltd. All rights reserved.</div>
+        <div class="footer-legal-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms & Conditions</a>
+          <a href="/admin" class="footer-admin-link">Staff Portal</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/products.js"></script>
+</body>
+</html>
