@@ -3,7 +3,7 @@
  * Core UI Script: Navigation, Sticky States, Mobile Drawer, Modals & Toast Alerts
  */
 
-document.addEventListener('DOMContentLoaded', () => {
+function init() {
   // 1. Sticky Header scroll effect
   const siteHeader = document.querySelector('.site-header');
   if (siteHeader) {
@@ -149,7 +149,14 @@ document.addEventListener('DOMContentLoaded', () => {
       reqTypeSelect.value = inquiryService;
     }
   }
-});
+}
+
+// Run immediately if DOM is already parsed, or wait for DOMContentLoaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
 
 /**
  * Toast Notification Helper

@@ -253,7 +253,8 @@ app.use((req, res, next) => {
 
 // Block access to sensitive files, secrets, database, test scripts, and storage folders
 app.use((req, res, next) => {
-  const reqPath = path.normalize(req.path).toLowerCase();
+  // Normalize with forward slashes for cross-platform consistency (Windows and Linux)
+  const reqPath = path.normalize(req.path).replace(/\\/g, '/').toLowerCase();
   
   // Block hidden files/folders (e.g., .env, .git)
   if (reqPath.split('/').some(part => part.startsWith('.'))) {
