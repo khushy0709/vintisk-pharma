@@ -78,7 +78,7 @@
   outline: none;
   background-color: var(--white);
   border-color: var(--teal-500);
-  box-shadow: 0 0 0 4px rgba(0, 163, 196, 0.15);
+  box-shadow: 0 0 0 4px rgba(21, 157, 154, 0.15);
 }
 
 .batch-input-field::placeholder {
@@ -99,19 +99,19 @@
   font-size: 1.05rem;
   font-weight: 700;
   border-radius: var(--radius-md);
-  background: linear-gradient(135deg, var(--teal-500), #008ba8);
+  background: linear-gradient(135deg, var(--teal-500), #118582);
   color: var(--white);
   border: none;
   cursor: pointer;
   transition: all var(--transition-smooth);
-  box-shadow: 0 4px 14px rgba(0, 163, 196, 0.35);
+  box-shadow: 0 4px 14px rgba(21, 157, 154, 0.35);
   white-space: nowrap;
 }
 
 .batch-verify-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg, #008ba8, #00768e);
+  background: linear-gradient(135deg, #118582, #0e6e6b);
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 163, 196, 0.45);
+  box-shadow: 0 6px 18px rgba(21, 157, 154, 0.45);
 }
 
 .batch-verify-btn:disabled {
@@ -293,7 +293,7 @@
 }
 
 .btn-open-doc:hover {
-  background-color: #008ba8;
+  background-color: #118582;
   transform: translateY(-1px);
   color: var(--white);
 }
@@ -468,7 +468,7 @@
 }
 
 .admin-brand-tag {
-  background: rgba(0, 163, 196, 0.2);
+  background: rgba(21, 157, 154, 0.2);
   color: var(--teal-400);
   border: 1px solid var(--teal-500);
   border-radius: var(--radius-sm);
@@ -492,7 +492,7 @@
   align-items: center;
   justify-content: center;
   padding: 3rem 1.5rem;
-  background: radial-gradient(circle at 50% 20%, #12284c 0%, var(--navy-950) 80%);
+  background: radial-gradient(circle at 50% 20%, #163861 0%, var(--navy-950) 80%);
 }
 
 .admin-login-card {

@@ -1,28 +1,31 @@
 /* ==========================================================================
    VINTISK PHARMACEUTICALS PVT. LTD. — GLOBAL DESIGN SYSTEM
    Modern Life-Sciences & Pharmaceutical Marketing Company Styling
-   Visual Identity: Deep Navy (#0a192f) + Pharmaceutical Blue (#0284c7) + Vintisk Teal Accent (#00a3c4)
+   Visual Identity: Primary Deep Navy (#102D50) + Secondary Teal (#159D9A) + Light Sections: Pale Teal (#EAF5F5)
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-  /* Core Color Palette */
-  --navy-950: #050d1a;
-  --navy-900: #0a192f;
-  --navy-850: #0d203d;
-  --navy-800: #12284c;
-  --navy-700: #1a3865;
+  /* Core Color Palette — 1. Colour Theme */
+  --navy-950: #0a1e36;
+  --navy-900: #102D50; /* Primary: Deep Navy Blue #102D50 */
+  --navy-850: #14355d;
+  --navy-800: #19406f;
+  --navy-700: #204e86;
   
-  --blue-700: #0369a1;
-  --blue-600: #0284c7;
-  --blue-500: #0ea5e9;
+  --blue-700: #0f628b;
+  --blue-600: #1279ab;
+  --blue-500: #1693cf;
   
-  --teal-600: #0891b2;
-  --teal-500: #00a3c4; /* Matching Vintisk Logo Teal/Cyan */
-  --teal-400: #06b6d4;
-  --teal-100: #e0f2fe;
-  --teal-50: #f0f9ff;
+  --teal-700: #0e6e6b;
+  --teal-600: #118582;
+  --teal-500: #159D9A; /* Secondary: Teal #159D9A */
+  --teal-400: #23b5b2;
+  --teal-300: #57cbc8;
+  --teal-200: #9ee5e3;
+  --teal-100: #d0f2f1;
+  --teal-50: #EAF5F5; /* Light sections: Pale Teal #EAF5F5 */
   
   --slate-900: #0f172a;
   --slate-800: #1e293b;
@@ -31,9 +34,9 @@
   --slate-500: #64748b;
   --slate-400: #94a3b8;
   --slate-300: #cbd5e1;
-  --slate-200: #e2e8f0;
-  --slate-100: #f1f5f9;
-  --slate-50: #f8fafc;
+  --slate-200: #dce7e7;
+  --slate-100: #f0f7f7;
+  --slate-50: #EAF5F5; /* Light sections: Pale Teal #EAF5F5 */
   --white: #ffffff;
 
   /* Typography */
@@ -379,7 +382,7 @@ h1, h2, h3, h4, h5, h6 {
   border-color: var(--teal-600);
   color: var(--white);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 163, 196, 0.3);
+  box-shadow: 0 4px 12px rgba(21, 157, 154, 0.3);
 }
 
 .btn-teal {
@@ -389,11 +392,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-teal:hover {
-  background-color: #008ba8;
-  border-color: #008ba8;
+  background-color: var(--teal-600);
+  border-color: var(--teal-600);
   color: var(--white);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 163, 196, 0.35);
+  box-shadow: 0 4px 12px rgba(21, 157, 154, 0.35);
 }
 
 .btn-outline {
@@ -558,9 +561,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .section-slate {
-  background-color: var(--slate-50);
-  border-top: var(--border-light);
-  border-bottom: var(--border-light);
+  background-color: var(--teal-50);
+  border-top: 1px solid #d5e9e9;
+  border-bottom: 1px solid #d5e9e9;
 }
 
 /* Trust Stats Strip (Strictly Verified, No Fake Numbers) */
@@ -1100,7 +1103,7 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--teal-50);
   padding: 0.25rem 0.6rem;
   border-radius: var(--radius-sm);
-  border: 1px solid rgba(0, 163, 196, 0.2);
+  border: 1px solid rgba(21, 157, 154, 0.2);
 }
 
 .office-title {
@@ -1196,7 +1199,7 @@ h1, h2, h3, h4, h5, h6 {
   outline: none;
   background-color: var(--white);
   border-color: var(--teal-500);
-  box-shadow: 0 0 0 3px rgba(0, 163, 196, 0.15);
+  box-shadow: 0 0 0 3px rgba(21, 157, 154, 0.15);
 }
 
 .search-icon {
@@ -1252,7 +1255,7 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--teal-50);
   padding: 0.25rem 0.6rem;
   border-radius: var(--radius-sm);
-  border: 1px solid rgba(0, 163, 196, 0.2);
+  border: 1px solid rgba(21, 157, 154, 0.2);
 }
 
 .product-name {
@@ -1483,7 +1486,7 @@ h1, h2, h3, h4, h5, h6 {
   outline: none;
   background-color: var(--white);
   border-color: var(--teal-500);
-  box-shadow: 0 0 0 3px rgba(0, 163, 196, 0.15);
+  box-shadow: 0 0 0 3px rgba(21, 157, 154, 0.15);
 }
 
 .form-textarea {
@@ -1756,7 +1759,7 @@ h1, h2, h3, h4, h5, h6 {
     background-color: var(--teal-500);
     border: 1.5px solid var(--teal-500);
     color: var(--white);
-    box-shadow: 0 2px 6px rgba(0, 163, 196, 0.25);
+    box-shadow: 0 2px 6px rgba(21, 157, 154, 0.25);
     white-space: nowrap;
     text-decoration: none;
     cursor: pointer;
@@ -1770,8 +1773,8 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .nav-verify-btn:hover {
-    background-color: #008ba8;
-    border-color: #008ba8;
+    background-color: var(--teal-600);
+    border-color: var(--teal-600);
     color: var(--white);
     transform: none;
   }
@@ -2186,7 +2189,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   border: 1.5px solid var(--teal-500);
   color: var(--navy-900);
-  background-color: rgba(0, 163, 196, 0.05);
+  background-color: rgba(21, 157, 154, 0.05);
   transition: all var(--transition-fast);
 }
 
@@ -2200,7 +2203,7 @@ h1, h2, h3, h4, h5, h6 {
   border-color: var(--teal-500);
   color: var(--white);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 163, 196, 0.25);
+  box-shadow: 0 4px 12px rgba(21, 157, 154, 0.25);
 }
 
 .nav-verify-btn:hover svg {
@@ -2349,7 +2352,7 @@ h1, h2, h3, h4, h5, h6 {
 /* --- Page Hero (all inner pages) --- */
 .page-hero {
   padding: 4rem 0 4.5rem;
-  background: linear-gradient(135deg, var(--navy-900) 0%, #0a2744 100%);
+  background: linear-gradient(135deg, var(--navy-900) 0%, var(--navy-950) 100%);
   color: var(--white);
 }
 

@@ -16,7 +16,7 @@ function initIndiaMarketVisual(containerId) {
         </pattern>
         
         <linearGradient id="routeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#00a3c4" stop-opacity="0.9"/>
+          <stop offset="0%" stop-color="#159D9A" stop-opacity="0.9"/>
           <stop offset="50%" stop-color="#38bdf8" stop-opacity="0.7"/>
           <stop offset="100%" stop-color="#0284c7" stop-opacity="0.9"/>
         </linearGradient>
@@ -44,7 +44,7 @@ function initIndiaMarketVisual(containerId) {
       <!-- Shaded Region Highlights for Major Domestic Markets -->
       <!-- Uttar Pradesh Region -->
       <path d="M 460 140 Q 520 135 560 160 Q 550 205 490 210 Q 450 190 460 140 Z" 
-            fill="rgba(0, 163, 196, 0.15)" stroke="#00a3c4" stroke-width="1.5" stroke-dasharray="3,3" />
+            fill="rgba(21, 157, 154, 0.15)" stroke="#159D9A" stroke-width="1.5" stroke-dasharray="3,3" />
 
       <!-- Madhya Pradesh Region -->
       <path d="M 420 210 Q 490 200 520 230 Q 510 280 430 280 Q 400 245 420 210 Z" 
@@ -72,11 +72,11 @@ function initIndiaMarketVisual(containerId) {
 
       <!-- Key Hub 1: MAHARASHTRA (Thane - Registered Corporate Base) -->
       <g transform="translate(380, 310)">
-        <circle r="16" fill="#00a3c4" opacity="0.25">
+        <circle r="16" fill="#159D9A" opacity="0.25">
           <animate attributeName="r" values="8;22;8" dur="3s" repeatCount="indefinite" />
           <animate attributeName="opacity" values="0.6;0.1;0.6" dur="3s" repeatCount="indefinite" />
         </circle>
-        <circle r="7" fill="#00a3c4" stroke="#ffffff" stroke-width="2" filter="url(#hubGlow)"/>
+        <circle r="7" fill="#159D9A" stroke="#ffffff" stroke-width="2" filter="url(#hubGlow)"/>
         <text x="-10" y="24" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700">
           Maharashtra
         </text>
@@ -117,7 +117,7 @@ function initIndiaMarketVisual(containerId) {
       <!-- Legend Panel -->
       <g transform="translate(40, 430)">
         <rect width="280" height="60" rx="8" fill="rgba(10, 25, 47, 0.85)" stroke="rgba(255, 255, 255, 0.12)" />
-        <circle cx="20" cy="20" r="5" fill="#00a3c4" />
+        <circle cx="20" cy="20" r="5" fill="#159D9A" />
         <text x="35" y="24" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="600">Current Major Markets</text>
         <circle cx="20" cy="42" r="5" fill="#0284c7" />
         <text x="35" y="46" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="11">Domestic Distribution Corridors</text>

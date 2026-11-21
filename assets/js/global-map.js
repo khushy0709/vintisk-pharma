@@ -19,7 +19,7 @@ function initGlobalNetwork(containerId) {
         
         <!-- Gradient for connection arcs -->
         <linearGradient id="cyanLineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#00a3c4" stop-opacity="0.8"/>
+          <stop offset="0%" stop-color="#159D9A" stop-opacity="0.8"/>
           <stop offset="50%" stop-color="#38bdf8" stop-opacity="0.6"/>
           <stop offset="100%" stop-color="#0284c7" stop-opacity="0.8"/>
         </linearGradient>
@@ -90,11 +90,11 @@ function initGlobalNetwork(containerId) {
 
       <!-- India Core Hub Node (Vintisk Base) -->
       <g transform="translate(680, 245)">
-        <circle r="16" fill="#00a3c4" opacity="0.25">
+        <circle r="16" fill="#159D9A" opacity="0.25">
           <animate attributeName="r" values="8;24;8" dur="3s" repeatCount="indefinite" />
           <animate attributeName="opacity" values="0.6;0.1;0.6" dur="3s" repeatCount="indefinite" />
         </circle>
-        <circle r="7" fill="#00a3c4" stroke="#ffffff" stroke-width="2" filter="url(#glow)"/>
+        <circle r="7" fill="#159D9A" stroke="#ffffff" stroke-width="2" filter="url(#glow)"/>
         <text x="12" y="5" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700">
           India Hub (HQ)
         </text>
